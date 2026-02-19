@@ -8,6 +8,10 @@ router.get("/login", forwardAuthenticated, (req, res) => {
   res.render("login", {messages: (req.session as any).messages || []});
   (req.session as any).messages = [];
 })
+router.get("/ping", (req, res) => {
+  res.send("AUTH ROUTE WORKS ✅");
+});
+
 // Redirect user to GitHub
 router.get(
   "/github",
@@ -34,11 +38,14 @@ router.post(
   })
 );
 
-router.get("/logout", (req, res) => {
+router.get("/logout", (req, res, next) => {
+  console.log("✅ LOGOUT ROUTE HIT");
+  debugger;
+
   req.logout((err) => {
-    if (err) console.log(err);
+    if (err) return next(err);
+    res.send("Logged out ✅ (temporary)");
   });
-  res.redirect("/auth/login");
 });
 
 export default router;
