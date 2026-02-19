@@ -5,6 +5,11 @@
         <img src="/secure-icon.png" alt="icon" width="20%" />
       </h1>
       <h2>Login</h2>
+      <% if (messages && messages.length > 0) { %>
+        <div class="alert alert-danger">
+          <%= messages[messages.length - 1] %>
+        </div>
+      <% } %>
       <form action="/auth/login" method="POST">
         <div class="form-group">
           <label for="email">Email</label>
@@ -27,6 +32,7 @@
           />
         </div>
         <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <a href="/auth/github" class="btn btn-primary btn-block">Login with Github</a>
       </form>
       <p class="mt-4">New User? <a href="/auth/register">Register</a></p>
       <p>Forgot Password? <a href="/auth/forgot">Reset</a></p>

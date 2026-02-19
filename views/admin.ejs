@@ -1,0 +1,24 @@
+<h1 style="color:red;">Dashboard</h1>
+<p>Welcome <%= user.name %></p>
+
+<h3>Current Active Sessions:</h3>
+
+<% const sids = Object.keys(sessions); %>
+
+<% if (sids.length === 0) { %>
+  <p>No active sessions.</p>
+<% } %>
+
+<% sids.forEach((sid) => { 
+  const s = sessions[sid];
+  const userId = s?.passport?.user;
+%>
+  <div style="margin-bottom: 14px;">
+    <div><b>SessionID:</b> <%= sid %></div>
+    <div><b>UserID:</b> <%= userId ?? "Not logged in" %></div>
+
+    <form method="POST" action="/admin/revoke/<%= sid %>">
+      <button type="submit">Revoke Session</button>
+    </form>
+  </div>
+<% }) %>
